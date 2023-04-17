@@ -9,3 +9,7 @@ body {
 .bg-primary {
     background-color: #1c1d3b !important;
 }
+
+.main-section {
+    padding: 2rem 0;
+}

@@ -3,6 +3,24 @@ import { series } from "./data.js";
 
 const tableBody = document.createElement("tbody");
 
+let totalSeasons = 0;
+let totalSeries = 0;
+
+const currentShowCard = document.getElementById("current-show");
+
+// Función que actualiza la tarjeta de información de la serie
+function updateCurrentShowCard(serie: Serie) {
+    currentShowCard?.querySelector(".card-img-top")?.setAttribute('src', serie.imageUrl);
+    currentShowCard!.querySelector(".card-title")!.textContent = serie.name;
+    currentShowCard!.querySelector(".card-text")!.textContent = serie.description;
+
+    // Actualizamos el texto y el enlace del botón "Go somewhere"
+    const watchButton = currentShowCard?.querySelector(".btn-primary");
+    watchButton!.textContent = `Watch on ${serie.channel}`;
+    watchButton?.setAttribute('href', serie.link);
+    watchButton?.setAttribute('target', '_blank'); // Agregamos el atributo target para abrir en una nueva pestaña
+}
+
 series.forEach((serie: Serie) => {
     const row = document.createElement("tr");
     const idCell = document.createElement("td");
@@ -12,9 +30,14 @@ series.forEach((serie: Serie) => {
 
     // Create an anchor element for the title with the link
     const nameLink = document.createElement("a");
-    nameLink.href = serie.link;
+    nameLink.href = '#';
+    nameLink.id = serie.id.toString();
     nameLink.textContent = serie.name;
-    nameLink.target = "_blank";
+
+    // Agregamos el evento de clic al enlace de la serie
+    nameLink.addEventListener('click', () => {
+        updateCurrentShowCard(serie);
+    });
 
     idCell.textContent = serie.id.toString();
     nameCell.appendChild(nameLink);
@@ -26,7 +49,19 @@ series.forEach((serie: Serie) => {
     row.appendChild(channelCell);
     row.appendChild(seasonsCell);
     tableBody.appendChild(row);
+
+    totalSeasons += serie.seasons;
+    totalSeries++;
 });
 
 const tableElement = document.querySelector("table") ?? document.createElement("table");
 tableElement.appendChild(tableBody);
+
+const averageSeasons = totalSeasons / totalSeries;
+
+const averageSeasonsElement = document.querySelector("#seasonsAverage") ?? document.createElement("span");
+averageSeasonsElement.textContent = averageSeasons.toString();
+
+
+// Actualizamos la tarjeta de información de la serie por defecto
+updateCurrentShowCard(series[0]);
