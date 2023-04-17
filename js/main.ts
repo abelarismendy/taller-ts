@@ -1,8 +1,9 @@
+import { Serie } from "./serie";
 import { series } from "./data";
 
 const tableBody = document.createElement("tbody");
 
-series.forEach((serie) => {
+series.forEach((serie: Serie) => {
     const row = document.createElement("tr");
     const idCell = document.createElement("td");
     const nameCell = document.createElement("td");
