@@ -1,5 +1,5 @@
 var _a;
-import { series } from "./data";
+import { series } from "./data.js";
 const tableBody = document.createElement("tbody");
 series.forEach((serie) => {
     const row = document.createElement("tr");

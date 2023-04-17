@@ -1,5 +1,5 @@
-import { Serie } from "./serie";
-import { series } from "./data";
+import { Serie } from "./serie.js";
+import { series } from "./data.js";
 
 const tableBody = document.createElement("tbody");
 
